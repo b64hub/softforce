@@ -18,13 +18,12 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     Map<string, string> authProviderConfiguration,
     String stateToPropagate
   ) {
-    this.authUrl = authProviderConfiguration.get('Auth_Url__c');
-    this.clientId = authProviderConfiguration.get('Client_Id__c');
-    this.scope = authProviderConfiguration.get('Scope__c');
-    this.state = authProviderConfiguration.get('State__c');
-    this.redirectUrl = authProviderConfiguration.get('Redirect_Url__c');
-    //Here the developer can build up a request of some sort
-    //Ultimately they’ll return a URL where we will redirect the user
+    authUrl = authProviderConfiguration.get('Auth_Url__c');
+    clientId = authProviderConfiguration.get('Client_Id__c');
+    scope = authProviderConfiguration.get('Scope__c');
+    state = authProviderConfiguration.get('State__c');
+    redirectUrl = authProviderConfiguration.get('Redirect_Url__c');
+
     String url =
       authUrl +
       '?client_id=' +
@@ -36,7 +35,7 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
       scope +
       '&state=' +
       stateToPropagate;
-    System.debug(url);
+
     return new PageReference(url);
   }
 
@@ -44,14 +43,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     Map<string, string> authProviderConfiguration,
     Auth.AuthProviderCallbackState state
   ) {
-    //Here, the developer will get the callback with actual protocol.
-    //Their responsibility is to return a new object called AuthProviderToken
-    //This will contain an optional accessToken and refreshToken
-
-    Logger.info('In callback mode');
-    //Logger.info(authProviderConfiguration);
-    //Logger.info(state);
-
     clientId = authProviderConfiguration.get('Client_Id__c');
     clientSecret = authProviderConfiguration.get('Client_Secret__c');
     tokenUrl = authProviderConfiguration.get('Token_Url__c');
@@ -60,8 +51,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     Map<String, String> queryParams = state.queryParameters;
     String code = queryParams.get('code');
     String sfdcState = queryParams.get('state');
-
-    Logger.info('Code received: ' + code);
 
     HttpRequest req = new HttpRequest();
     String url = tokenUrl;
@@ -76,40 +65,26 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
       clientId +
       '&client_secret=' +
       clientSecret;
-    Logger.info('Request body: ' + body);
     req.setBody(body);
     req.setEndpoint(url);
     req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.setMethod('POST');
 
-    Logger.info('Making request to endpoint ' + url);
     Http http = new Http();
     HTTPResponse res = http.send(req);
     String responseBody = res.getBody();
-    Logger.info('Response:' + responseBody);
 
     String accessToken = getTokenValueFromResponse(
       responseBody,
       'access_token'
     );
-    //Parse access token value
     String refreshToken = getTokenValueFromResponse(
       responseBody,
       'refresh_token'
     );
-    //Parse refresh token value
 
-    Logger.info('access_token: ' + accessToken);
-    Logger.info('refresh_token: ' + refreshToken);
-    Logger.saveLog();
-
-    //Logger.info('Received access token: ' + accessToken.left(20) + '...');
-    //Logger.info('Received refresh token: ' + refreshToken.left(20) + '...');
-
-    //Logger.saveLog();
-    //don’t hard-code the refresh token value!
     return new Auth.AuthProviderTokenResponse(
-      'Softrig Auth Test',
+      'Softrig',
       accessToken,
       refreshToken,
       sfdcState
@@ -120,9 +95,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     Map<String, String> authProviderConfiguration,
     String refreshToken
   ) {
-    Logger.info('Refresh token');
-    Logger.saveLog();
-
     clientId = authProviderConfiguration.get('Client_Id__c');
     clientSecret = authProviderConfiguration.get('Client_Secret__c');
     tokenUrl = authProviderConfiguration.get('Token_Url__c');
@@ -134,19 +106,16 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     req.setEndpoint(url);
     req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.setMethod('POST');
-    String body = EncodingUtil.urlEncode(
+    String body =
       'grant_type=refresh_token' +
-        '&refresh_token=' +
-        refreshToken +
-        '&redirect_uri=' +
-        redirectUrl +
-        '&client_id=' +
-        clientId +
-        '&client_secret=' +
-        clientSecret,
-      'UTF-8'
-    );
-    Logger.info('Request body: ' + body);
+      '&refresh_token=' +
+      refreshToken +
+      '&redirect_uri=' +
+      EncodingUtil.urlEncode(redirectUrl, 'UTF-8') +
+      '&client_id=' +
+      clientId +
+      '&client_secret=' +
+      clientSecret;
     req.setBody(body);
 
     Http http = new Http();
@@ -156,7 +125,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
       responseBody,
       'access_token'
     );
-    //Parse access token value
     String newRefreshToken = getTokenValueFromResponse(
       responseBody,
       'refresh_token'
@@ -169,7 +137,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     Map<string, string> authProviderConfiguration,
     Auth.AuthProviderTokenResponse response
   ) {
-    Logger.info('get user info');
     //Here the developer is responsible for constructing an Auth.UserData object
     //   String token = response.oauthToken;
     //   HttpRequest req = new HttpRequest();
@@ -193,7 +160,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     provMap.put('oauthToken', response.oauthToken);
     provMap.put('state', response.state);
     provMap.put('refreshToken', response.oauthSecretOrRefreshToken);
-    Logger.saveLog();
     return new Auth.UserData(
       UserInfo.getUserId(),
       UserInfo.getFirstName(),
@@ -211,23 +177,10 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
 
   @TestVisible
   private String getTokenValueFromResponse(String response, String token) {
-    System.debug('get token value');
-    System.debug(response);
-    System.debug(token);
-
     Map<String, Object> res = (Map<String, Object>) JSON.deserializeUntyped(
       response
     );
     String value = (String) res.get(token);
-
-    //  Dom.Document docx = new Dom.Document();
-    //  docx.load(response);
-    //  String ret = null;
-
-    //  dom.XmlNode xroot = docx.getrootelement() ;
-    //  if(xroot != null){
-    //     ret = xroot.getChildElement(token, ns).getText();
-    //  }
     return value;
   }
 }

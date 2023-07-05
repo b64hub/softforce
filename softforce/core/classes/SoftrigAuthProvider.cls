@@ -7,8 +7,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
   private String authUrl; // application redirection to the Concur website for authentication and authorization
   private String tokenUrl; // uri to get the new access token from concur  using the GET verb
   private final String customMetadataTypeApiName = 'Softrig_Auth_Settings__mdt'; // api name for the custom metadata type created for this auth provider
-  private String userAPIUrl; // api url to access the user in concur
-  private String userAPIVersionUrl; // version of the user api url to access data from concur
 
   global String getCustomMetadataType() {
     return customMetadataTypeApiName;
@@ -137,29 +135,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     Map<string, string> authProviderConfiguration,
     Auth.AuthProviderTokenResponse response
   ) {
-    //Here the developer is responsible for constructing an Auth.UserData object
-    //   String token = response.oauthToken;
-    //   HttpRequest req = new HttpRequest();
-    //   userAPIUrl = authProviderConfiguration.get('API_User_Url__c');
-    //   userAPIVersionUrl = authProviderConfiguration.get('API_User_Version_Url__c');
-    //   req.setHeader('Authorization', 'OAuth ' + token);
-    //   req.setEndpoint(userAPIUrl);
-    //   req.setHeader('Content-Type','application/xml');
-    //   req.setMethod('GET');
-
-    //   Http http = new Http();
-    //   HTTPResponse res = http.send(req);
-    //   String responseBody = res.getBody();
-    //   String id = getTokenValueFromResponse(responseBody, 'LoginId',userAPIVersionUrl);
-    //   String fname = getTokenValueFromResponse(responseBody, 'FirstName', userAPIVersionUrl);
-    //   String lname = getTokenValueFromResponse(responseBody, 'LastName', userAPIVersionUrl);
-    //   String flname = fname + ' ' + lname;
-    //   String uname = getTokenValueFromResponse(responseBody, 'EmailAddress', userAPIVersionUrl);
-    //   String locale = getTokenValueFromResponse(responseBody, 'LocaleName', userAPIVersionUrl);
-    Map<String, String> provMap = new Map<String, String>();
-    provMap.put('oauthToken', response.oauthToken);
-    provMap.put('state', response.state);
-    provMap.put('refreshToken', response.oauthSecretOrRefreshToken);
     return new Auth.UserData(
       UserInfo.getUserId(),
       UserInfo.getFirstName(),
@@ -169,9 +144,9 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
       null,
       UserInfo.getUserName(),
       UserInfo.getLocale(),
-      'Softrig Auth Test',
+      'Softrig',
       null,
-      provMap
+      null
     );
   }
 

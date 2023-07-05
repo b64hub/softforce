@@ -2,9 +2,20 @@
   "packageDirectories": [
     {
       "path": "./softforce/core",
-      "package": "SoftForce-Core",
+      "package": "softforce-core",
       "versionName": "v1.0.0",
-      "versionNumber": "1.0.0.0"
+      "versionNumber": "1.0.0.NEXT",
+      "default": false,
+      "versionDescription": "Softrig x Salesforce integration"
+    },
+    {
+      "path": "./softforce-config",
+      "package": "softforce-config",
+      "versionName": "v1.0.0",
+      "versionNumber": "1.0.0.NEXT",
+      "default": false,
+      "versionDescription": "Softrig x Salesforce integration configuration",
+      "aliasify": true
     },
     {
       "path": "./src-temp",
@@ -14,6 +25,20 @@
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "57.0",
-  "packageAliases": {},
-  "plugins": {}
+  "packageAliases": {
+    "softforce-core": "0Ho68000000blLFCAY"
+  },
+  "plugins": {},
+  "replacements": [
+    {
+      "filename": "softforce-config/authproviders/Softrig.authprovider-meta.xml",
+      "stringToReplace": "{env.EXEC_USER}",
+      "replaceWithEnv": "EXEC_USER"
+    },
+    {
+      "filename": "softforce-config/authproviders/Softrig_Test.authprovider-meta.xml",
+      "stringToReplace": "{env.EXEC_USER}",
+      "replaceWithEnv": "EXEC_USER"
+    }
+  ]
 }

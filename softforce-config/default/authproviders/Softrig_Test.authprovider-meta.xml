@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
     <customMetadataTypeRecord
-  >Softrig_Auth_Settings__mdt.Softrig</customMetadataTypeRecord>
-    <executionUser>test-g3sakctv6ios@example.com</executionUser>
-    <friendlyName>Softrig</friendlyName>
+  >Softrig_Auth_Settings__mdt.Softrig_Test</customMetadataTypeRecord>
+    <executionUser>{env.EXEC_USER}</executionUser>
+    <friendlyName>Softrig Test</friendlyName>
     <iconUrl
   >https://www.softrig.com/media/site/softrig-symbol-blue.svg</iconUrl>
     <includeOrgIdInIdentifier>false</includeOrgIdInIdentifier>
@@ -11,5 +11,5 @@
     <providerType>Custom</providerType>
     <sendAccessTokenInHeader>false</sendAccessTokenInHeader>
     <sendClientCredentialsInHeader>false</sendClientCredentialsInHeader>
-    <sendSecretInApis>true</sendSecretInApis>
+    <sendSecretInApis>false</sendSecretInApis>
 </AuthProvider>

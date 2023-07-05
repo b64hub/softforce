@@ -4,3 +4,4 @@ artifacts
 .npmrc
 .sf
 node_modules
+.env

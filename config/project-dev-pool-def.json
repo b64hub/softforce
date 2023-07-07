@@ -9,7 +9,6 @@
   "enableSourceTracking": true,
   "retryOnFailure": true,
   "succeedOnDeploymentErrors": true,
-  "snapshotPool": "snapshot",
   "installAll": true,
   "fetchArtifacts": {
     "npm": {

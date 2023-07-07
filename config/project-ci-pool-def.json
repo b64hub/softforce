@@ -6,7 +6,6 @@
   "batchSize": 5,
   "configFilePath": "config/project-scratch-def.json",
   "enableSourceTracking": false,
-  "snapshotPool": "snapshot",
   "installAll": true,
   "fetchArtifacts": {
     "npm": {

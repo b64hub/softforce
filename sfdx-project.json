@@ -32,12 +32,7 @@
   "replacements": [
     {
       "filename": "softforce-config/default/authproviders/Softrig.authprovider-meta.xml",
-      "stringToReplace": "{env.EXEC_USER}",
-      "replaceWithEnv": "EXEC_USER"
-    },
-    {
-      "filename": "softforce-config/default/authproviders/Softrig_Test.authprovider-meta.xml",
-      "stringToReplace": "{env.EXEC_USER}",
+      "stringToReplace": "{{ env.EXEC_USER }}",
       "replaceWithEnv": "EXEC_USER"
     }
   ]

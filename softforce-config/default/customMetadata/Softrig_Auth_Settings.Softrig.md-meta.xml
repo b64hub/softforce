@@ -10,28 +10,28 @@
         <field>Auth_Url__c</field>
         <value
       xsi:type="xsd:string"
-    >https://login.softrig.com/connect/authorize</value>
+    >https://test-login.softrig.com/connect/authorize</value>
     </values>
     <values>
         <field>Client_Id__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string" />
     </values>
     <values>
         <field>Client_Secret__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string" />
     </values>
     <values>
         <field>Redirect_Url__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string" />
     </values>
     <values>
         <field>Scope__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string" />
     </values>
     <values>
         <field>Token_Url__c</field>
         <value
       xsi:type="xsd:string"
-    >https://login.softrig.com/connect/token</value>
+    >https://test-login.softrig.com/connect/token</value>
     </values>
 </CustomMetadata>

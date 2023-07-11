@@ -2,7 +2,7 @@
 <AuthProvider xmlns="http://soap.sforce.com/2006/04/metadata">
     <customMetadataTypeRecord
   >Softrig_Auth_Settings__mdt.Softrig_Test</customMetadataTypeRecord>
-    <executionUser>test-flkbaofoz8bv@example.com</executionUser>
+    <executionUser>{env.EXEC_USER}</executionUser>
     <friendlyName>Softrig Test</friendlyName>
     <iconUrl
   >https://www.softrig.com/media/site/softrig-symbol-blue.svg</iconUrl>

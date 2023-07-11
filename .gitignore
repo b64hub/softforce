@@ -5,3 +5,4 @@ artifacts
 .sf
 node_modules
 .env
+deploy-options.json

@@ -5,7 +5,7 @@ public with sharing class SoftrigAuthProviderTest {
   private static final String REFRESH_TOKEN = 'refreshToken';
   private static final String NEW_REFRESH_TOKEN = 'newSuperfreshRefreshToken';
   private static final String ID_TOKEN = 'idToken';
-  private static final String REDIRECT_URL = 'https://computing-flow-9409-dev-ed.scratch.my.salesforce.com/services/authcallback/Softrig';
+  private static final String REDIRECT_URL = 'https://test.scratch.my.salesforce.com/services/authcallback/Softrig';
   private static final String CLIENT_ID = 'testClientId';
   private static final String SECRET = 'testSecret';
   private static final String STATE_TO_PROPOGATE = 'testState';

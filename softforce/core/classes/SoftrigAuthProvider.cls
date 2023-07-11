@@ -19,7 +19,6 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
     authUrl = authProviderConfiguration.get('Auth_Url__c');
     clientId = authProviderConfiguration.get('Client_Id__c');
     scope = authProviderConfiguration.get('Scope__c');
-    state = authProviderConfiguration.get('State__c');
     redirectUrl = authProviderConfiguration.get('Redirect_Url__c');
 
     String url =
@@ -48,11 +47,10 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
 
     Map<String, String> queryParams = state.queryParameters;
     String code = queryParams.get('code');
-    String sfdcState = queryParams.get('state');
+    String callbackState = queryParams.get('state');
 
     HttpRequest req = new HttpRequest();
     String url = tokenUrl;
-
     String body =
       'grant_type=authorization_code' +
       '&code=' +
@@ -63,6 +61,7 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
       clientId +
       '&client_secret=' +
       clientSecret;
+
     req.setBody(body);
     req.setEndpoint(url);
     req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -85,7 +84,7 @@ global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
       'Softrig',
       accessToken,
       refreshToken,
-      sfdcState
+      callbackState
     );
   }
 

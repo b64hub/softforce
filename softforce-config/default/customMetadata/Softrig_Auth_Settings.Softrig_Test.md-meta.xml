@@ -14,18 +14,28 @@
     </values>
     <values>
         <field>Client_Id__c</field>
-        <value xsi:nil="true" />
+        <value
+      xsi:type="xsd:string"
+    >ba855d83-ae61-458c-af45-b79314582c8e</value>
     </values>
     <values>
         <field>Client_Secret__c</field>
-        <value xsi:nil="true" />
+        <value xsi:type="xsd:string">mysecret123456789</value>
     </values>
     <values>
         <field>Redirect_Url__c</field>
-        <value xsi:nil="true" />
+        <value
+      xsi:type="xsd:string"
+    >https://enterprise-inspiration-1924-dev-ed.scratch.my.salesforce.com/services/authcallback/Softrig_Test</value>
     </values>
     <values>
         <field>Scope__c</field>
+        <value
+      xsi:type="xsd:string"
+    >AppFramework Administrator Sales.Admin openid profile offline_access</value>
+    </values>
+    <values>
+        <field>State__c</field>
         <value xsi:nil="true" />
     </values>
     <values>

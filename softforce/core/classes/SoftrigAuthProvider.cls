@@ -1,12 +1,12 @@
 global class SoftrigAuthProvider extends Auth.AuthProviderPluginClass {
-  public String redirectUrl; // use this URL for the endpoint that the authentication provider calls back to for configuration
+  public String redirectUrl;
   private String clientId;
   private String clientSecret;
   private String scope;
   private String state;
-  private String authUrl; // application redirection to the Concur website for authentication and authorization
-  private String tokenUrl; // uri to get the new access token from concur  using the GET verb
-  private final String customMetadataTypeApiName = 'Softrig_Auth_Settings__mdt'; // api name for the custom metadata type created for this auth provider
+  private String authUrl;
+  private String tokenUrl;
+  private final String customMetadataTypeApiName = 'Softrig_Auth_Settings__mdt';
 
   global String getCustomMetadataType() {
     return customMetadataTypeApiName;

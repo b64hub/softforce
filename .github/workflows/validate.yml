@@ -32,7 +32,7 @@ jobs:
 
       - name: "Create scratch org"
         run: |
-          sf org create scratch -a org -d -f config/project-scratch-def.json
+          sf org create scratch -a org -f config/project-scratch-def.json -v devhub -y 1 -w 20
           EXEC_USER=$(sf org display user --json | jq -r .result.username)
 
       # Validate source and trigger test

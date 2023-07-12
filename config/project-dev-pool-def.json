@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/dxatscale/sfpowerscripts/0df8d78ae327d03bf5b2e965dcced459066abb83/packages/core/resources/pooldefinition.schema.json",
   "tag": "dev",
-  "maxAllocation": 15,
+  "maxAllocation": 5,
   "expiry": 7,
   "batchSize": 5,
   "configFilePath": "config/project-scratch-def.json",

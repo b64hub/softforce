@@ -13,7 +13,7 @@ jobs:
   quickbuild:
     uses: b64hub/dx-actions/.github/workflows/quickbuild.yml@main
     with:
-      datadog: true
+      datadog: false
     secrets:
       DEVHUB_SFDX_AUTH_URL: ${{ secrets.DEVHUB_SFDX_AUTH_URL }}
       DATADOG_HOST: "${{ vars.DATADOG_HOST }}"
@@ -25,8 +25,9 @@ jobs:
     permissions:
       packages: write
       contents: write
+      actions: write
     with:
-      datadog: true
+      datadog: false
     secrets:
       DEVHUB_SFDX_AUTH_URL: ${{ secrets.DEVHUB_SFDX_AUTH_URL }}
       DATADOG_HOST: "${{ vars.DATADOG_HOST }}"

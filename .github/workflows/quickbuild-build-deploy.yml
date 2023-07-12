@@ -19,39 +19,9 @@ jobs:
       DATADOG_HOST: "${{ vars.DATADOG_HOST }}"
       DATADOG_API_KEY: "${{ secrets.DATADOG_API_KEY }}"
 
-  deploy-dev:
-    needs: quickbuild
-    name: "Deploy to dev environment"
-    runs-on: ubuntu-latest
-    container: ghcr.io/dxatscale/sfpowerscripts:latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: quickbuild-artifacts
-          path: artifacts
-
-      - name: "Authenticate Dev Hub"
-        run: |
-          echo "${{ secrets.DEVHUB_SFDX_AUTH_URL }}" > ./authfile
-          sf org login sfdx-url -f authfile -a devhub
-
-      - name: "Authenticate to ${{ inputs.org-alias }}"
-        run: |
-          echo "${{ secrets.ENV_SFDX_AUTH_URL }}" > ./env_authfile
-          sf org lofin sfdx-url -f ./env_authfile -a ${{ inputs.org-alias }}
-          EXEC_USER=$(sf org display user -o ${{ inputs.org-alias }} --json | jq -r .result.username)
-
-      - name: "Deploy to ${{ inputs.org-alias }}"
-        run: |
-          sfp dependency:install -u ${{ inputs.org-alias }} -v devhub
-          sfp orchestrator:deploy -u ${{ inputs.org-alias }}  --skipifalreadyinstalled -g "::group::,::endgroup::"
-
   build-publish:
     uses: b64hub/dx-actions/.github/workflows/build-publish.yml@main
+    needs: quickbuild
     permissions:
       packages: write
       contents: write

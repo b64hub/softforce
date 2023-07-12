@@ -21,7 +21,8 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "financialforce.lana",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "GitHub.copilot"
       ]
     }
   },

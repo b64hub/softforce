@@ -1,6 +1,4 @@
-This repository is an opinionated verison of the dx@scale template. It's to be used in github and is shipped with a devcontainer installed with all the dependencies. 
-
-The rest of this readme comes from the dx@scale template.
+## Softrig x Salesforce Integration
 
 **Development**
 
@@ -9,67 +7,55 @@ This project is using a scratch org development model. In order to contribute yo
 **Dependencies**
 
 - sfdx cli
-- sfpowerkit plugin ( sfdx plugins:install @dxatscale/sfpowerkit)
-- @dxatscale/sfpowerscripts plugin  ( sfdx plugins:install @dxatscale/sfpowerscripts)
+- sf cli
+- sfpowerscripts ( npm install @dxatscale/sfpowerscripts)
 
+A devcontainer with installed dependencies is provided.
 
 **Scratch Org Setup**
 
 For this you will need to be authenticated to a Dev Hub org - this is typically the Production Org
 
-- Authenticate to the  DevHub (Production Org)
+- Authenticate to the DevHub (Production Org)
 
-    You need to perform this step only once
-   ```
-    $ sfdx force:auth:web:login -setalias devhub
-   ```
+  You need to perform this step only once
 
+  ```
+   $ sf force:auth:web:login -setalias devhub
+  ```
 
-- Clone the repository 
+- Clone the repository
 
 - There are two options: fetch a scratch org with package dependencies pre-installed, or create an empty scratch org
 
-    - Option A: Fetch a scratch org from the pool [Preferred]
-       ```
-    
-       sfdx sfpowerscripts:pool:fetch -t dev -a  <alias>
-      ```
-    
-    - Option B: Create a scratch org and install all dependencies
-    
-        ```
-        sfdx force:org:create --definitionfile config/project-scratch-def.json --setalias <myScratchOrg> --targetdevhubusername <devhub-alias>
-        sfdx sfpowerkit:package:dependencies:install --targetusername <myScratchOrg> -v <devhub-alias>
-        
-        Push the source code
-        sfdx force:source:push --targetusername <myScratchOrg>
+  - Option A: Fetch a scratch org from the pool [Preferred]
 
-       ```
+    ```
+
+    sfdx sfpowerscripts:pool:fetch -t dev -a  <alias>
+    ```
+
+  - Option B: Create a scratch org and install all dependencies
+
+    ```
+    sfdx force:org:create --definitionfile config/project-scratch-def.json --setalias <myScratchOrg> --targetdevhubusername <devhub-alias>
+    sfdx sfpowerkit:package:dependencies:install --targetusername <myScratchOrg> -v <devhub-alias>
+
+    Push the source code
+    sfdx force:source:push --targetusername <myScratchOrg>
+
+    ```
 
 **File structure**
 
-src
+softforce
 
-Each domain should be represented by a subfolder under this directory. For example, the core schema is defined as src/core-crm.
+Contains the Apex Custom Auth Provider and remote site settings. Can be deployed as a unlocked package.
 
-src-env-specific
+softforce-config
 
-Metadata that is specific to a particular org should be stored here, under the relevant org folder e.g. sit.
-
-src-access-management
-
-This folder is comprised of metadata relating to profiles and other access management.
-
-scripts
-
-Container for scripts organised by domain e.g. customer, candidates. Initialisation scripts for scratch orgs are also found here.
-
-forceignores
-
-Container for .forceignore files belonging to different scratchorg configurations.
+Source packaged metadata. Auth provider requires an Execution User which is org-specific. This can be configured through the env variable EXEC_USER before deployment.
 
 src-temp
 
 New metadata created in scratch orgs is automatically pulled to this location, and must be moved into a package as it does not get deployed.
-
-

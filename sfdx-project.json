@@ -15,7 +15,7 @@
       "versionNumber": "1.0.0.NEXT",
       "default": false,
       "versionDescription": "Softrig x Salesforce integration configuration",
-      "aliasify": true
+      "aliasfy": true
     },
     {
       "path": "./src-temp",
